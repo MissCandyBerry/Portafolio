@@ -9,8 +9,8 @@ class CustomCursor {
         this.speed = 0.2;
 
         // Spotlight config (CSS variables)
-        this.spotSize = 350; // diámetro aproximado del foco
-        this.spotColor = 'rgba(100, 255, 218, 0.15)'; // acento suave (puedes ajustar)
+        this.spotSize = 300; 
+        this.spotColor = 'rgba(201, 126, 206, 0.15)'; // acento suave (puedes ajustar)
 
         this.init();
     }
