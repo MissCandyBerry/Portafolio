@@ -6,20 +6,25 @@
 
 /* Color Scheme */
 :root {
-    --primary-color: #C75B7A;      /* Rosa */
-    --secondary-color: #2A2A3E;    /* Azul oscuro */
-    --accent-color: #F5C89A;       /* Melocotón */
-    --dark-bg: #0A0E27;            /* Fondo muy oscuro */
-    --light-bg: #112240;           /* Fondo claro */
-    --text-primary: #FFFFFF;       /* Texto blanco */
-    --text-secondary: #8892B0;     /* Texto gris */
-    --text-accent: #64FFDA;        /* Texto acento */
-    --border-color: #233554;       /* Bordes */
+    --primary-color: #edb9f0;      /* Rosa */
+    --secondary-color: #130835;    /* Azul oscuro */
+    --accent-color: #f4f4f4;       /* Melocotón */
+    --dark-bg: #111010;;            /* Fondo muy oscuro */
+    --light-bg: #111010;           /* Fondo claro */
+    --text-primary: #f5c5f5;       /* Texto blanco */
+    --text-secondary: #f3e7f3;     /* Texto gris */
+    --border-color: #111010;       /* Bordes */
     
     --font-sans: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     --font-mono: 'Courier New', monospace;
     
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Spotlight variables */
+    --spot-x: 50vw;
+    --spot-y: 50vh;
+    --spot-size: 320px;
+    --spot-color: rgba(246, 208, 220, 0.12);
 }
 
 html {
@@ -27,12 +32,59 @@ html {
 }
 
 body {
-    font-family: var(--font-sans);
-    background: var(--dark-bg);
-    color: var(--text-primary);
-    overflow-x: hidden;
-    margin: 0;
-    padding: 0;
+  font-family: var(--font-sans);
+  color: var(--text-primary);
+  overflow-x: hidden;
+  margin: 0;
+  padding: 0;
+  background: linear-gradient(180deg,#000000 0%, #1b1b1b 100%);
+  position: relative;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background:
+    radial-gradient(circle at var(--spot-x) var(--spot-y),
+      rgba(246, 208, 220,0.14) 0%,
+      rgba(246, 208, 220,0.10) 10%,
+      rgba(246, 208, 220,0.06) 22%,
+      rgba(246, 208, 220,0.03) 34%,
+      transparent 50%
+    ),
+    radial-gradient(circle at var(--spot-x) var(--spot-y),
+      rgba(246, 208, 220,0.06) 0%,
+      rgba(246, 208, 220,0.04) 24%,
+      transparent 52%
+    );
+  filter: blur(5px);
+  transition: opacity 0.35s ease;
+}
+
+.cursor {
+  position: fixed;
+  width: 12px;
+  height: 12px;
+  background: #c596cb;
+  border-radius: 50%;
+  pointer-events: none;
+  transform: translate(-50%,-50%);
+  z-index: 9999;
+  box-shadow:
+    0 0 6px rgba(246, 208, 220, 0.7),
+    0 0 14px rgba(246, 208, 220,0.35);
+    display: none  ;
+}
+
+.cursor-follower { display: none; }
+
+/* Asegúrate de que los contenedores principales sean transparentes */
+.sidebar-left,
+.content-main {
+  background: transparent;
 }
 
 /* ============= CURSOR PERSONALIZADO ============= */
@@ -47,6 +99,7 @@ body {
     z-index: 9999;
     transform: translate(-50%, -50%);
     box-shadow: 0 0 20px rgba(199, 91, 122, 0.5);
+    opacity: 0; /* empieza oculto hasta mouseenter */
 }
 
 .cursor-follower {
@@ -81,9 +134,9 @@ body {
     justify-content: flex-start;
     align-items: flex-start;
     padding: 100px 120px;
-    background: var(--dark-bg);
+    background: transparent; /* deja ver el spotlight */
     z-index: 100;
-    overflow: hidden;
+    overflow: visible;
     margin-left: 10%;
 }
 
@@ -217,7 +270,7 @@ body {
 .content-main {
     width: 70%;
     margin-left: 40%;
-    background: var(--dark-bg);
+    background: transparent; /* deja ver el spotlight */
     padding: 80px 120px;
 }
 
@@ -280,7 +333,7 @@ section:last-of-type {
 
 .skills {
     padding: 6rem 2rem;
-    background: linear-gradient(to bottom, transparent, rgba(199, 91, 122, 0.05));
+    background: linear-gradient(to bottom, transparent, rgba(211, 166, 209, 0));
 }
 
 .skills-grid {
@@ -296,7 +349,7 @@ section:last-of-type {
     align-items: center;
     justify-content: center;
     padding: 24px 16px;
-    background: linear-gradient(135deg, rgba(199, 91, 122, 0.05) 0%, rgba(245, 200, 154, 0.02) 100%);
+    background: linear-gradient(135deg, rgba(202, 131, 184, 0.05) 0%, rgba(245, 200, 154, 0.02) 100%);
     border: 1px solid rgba(199, 91, 122, 0.15);
     border-radius: 12px;
     transition: var(--transition);
@@ -305,7 +358,7 @@ section:last-of-type {
 
 .skill-card:hover {
     border-color: var(--primary-color);
-    box-shadow: 0 20px 40px rgba(199, 91, 122, 0.15);
+    box-shadow: 0 20px 40px rgba(199, 91, 179, 0.15);
     transform: translateY(-8px);
     background: linear-gradient(135deg, rgba(199, 91, 122, 0.1) 0%, rgba(245, 200, 154, 0.05) 100%);
 }
@@ -314,12 +367,12 @@ section:last-of-type {
     width: 64px;
     height: 64px;
     object-fit: contain;
-    filter: drop-shadow(0 0 8px rgba(199, 91, 122, 0. 2));
+    filter: drop-shadow(0 0 8px rgba(199, 91, 184, 0.2));
     transition: var(--transition);
 }
 
 .skill-card:hover .skill-icon {
-    filter: drop-shadow(0 0 16px rgba(199, 91, 122, 0.4));
+    filter: drop-shadow(0 0 16px rgba(197, 91, 199, 0.4));
     transform: scale(1.1);
 }
 
@@ -427,50 +480,6 @@ section:last-of-type {
     color: var(--text-secondary);
 }
 
-/* ============= CONTACT ============= */
-
-.contact-text {
-    color: var(--text-secondary);
-    line-height: 1.8;
-    margin-bottom: 24px;
-    font-size: 1rem;
-}
-
-.cta-button {
-    display: inline-block;
-    padding: 12px 28px;
-    border: 2px solid var(--primary-color);
-    color: var(--primary-color);
-    text-decoration: none;
-    border-radius: 6px;
-    font-weight: 600;
-    transition: var(--transition);
-    position: relative;
-    overflow: hidden;
-    font-size: 0.95rem;
-}
-
-.cta-button::before {
-    content: '';
-    position: absolute;
-    top: 0;
-    left: -100%;
-    width: 100%;
-    height: 100%;
-    background: var(--primary-color);
-    z-index: -1;
-    transition: var(--transition);
-}
-
-.cta-button:hover {
-    color: var(--dark-bg);
-    box-shadow: 0 10px 30px rgba(199, 91, 122, 0.3);
-}
-
-.cta-button:hover::before {
-    left: 0;
-}
-
 /* ============= FOOTER ============= */
 
 .footer {
@@ -573,6 +582,7 @@ section:last-of-type {
         align-items: flex-start;
         padding: 60px 30px;
         border-bottom: 1px solid rgba(199, 91, 122, 0.1);
+        background: transparent;
     }
 
     .sidebar-content {
@@ -606,6 +616,7 @@ section:last-of-type {
         width: 100%;
         margin-left: 0;
         padding: 60px 30px;
+        background: transparent;
     }
 
     .name {

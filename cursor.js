@@ -8,13 +8,21 @@ class CustomCursor {
         this.followerY = 0;
         this.speed = 0.2;
 
+        // Spotlight config (CSS variables)
+        this.spotSize = 350; // diámetro aproximado del foco
+        this.spotColor = 'rgba(100, 255, 218, 0.15)'; // acento suave (puedes ajustar)
+
         this.init();
     }
 
     init() {
         document.addEventListener('mousemove', (e) => this.onMouseMove(e));
         document.addEventListener('mouseenter', () => this.onMouseEnter());
-        document.addEventListener('mouseleave', () => this. onMouseLeave());
+        document.addEventListener('mouseleave', () => this.onMouseLeave());
+
+        // Inicializa variables CSS del spotlight
+        document.documentElement.style.setProperty('--spot-size', `${this.spotSize}px`);
+        document.documentElement.style.setProperty('--spot-color', this.spotColor);
 
         this.animate();
     }
@@ -23,26 +31,31 @@ class CustomCursor {
         this.mouseX = e.clientX;
         this.mouseY = e.clientY;
 
+        // Cursor principal
         this.cursor.style.left = this.mouseX + 'px';
         this.cursor.style.top = this.mouseY + 'px';
+
+        // Actualiza variables CSS para el spotlight
+        document.documentElement.style.setProperty('--spot-x', `${this.mouseX}px`);
+        document.documentElement.style.setProperty('--spot-y', `${this.mouseY}px`);
     }
 
     onMouseEnter() {
         this.cursor.style.opacity = '1';
-        this.cursorFollower.style.opacity = '0. 5';
+        this.cursorFollower.style.opacity = '0.5';
     }
 
     onMouseLeave() {
-        this. cursor.style.opacity = '0';
+        this.cursor.style.opacity = '0';
         this.cursorFollower.style.opacity = '0';
     }
 
     animate() {
-        this.followerX += (this.mouseX - this. followerX) * this.speed;
-        this.followerY += (this.mouseY - this.followerY) * this. speed;
+        this.followerX += (this.mouseX - this.followerX) * this.speed;
+        this.followerY += (this.mouseY - this.followerY) * this.speed;
 
         this.cursorFollower.style.left = this.followerX + 'px';
-        this.cursorFollower.style.top = this. followerY + 'px';
+        this.cursorFollower.style.top = this.followerY + 'px';
 
         requestAnimationFrame(() => this.animate());
     }

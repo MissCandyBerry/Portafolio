@@ -12,14 +12,31 @@ class Portfolio {
         if (this.itsonId) {
             await this.loadProjects();
         } else {
-            this.showError('ITSon ID no configurado');
+            this.showError('ITSon ID no configurado. Agrega ?itsonId=TU_ID en la URL.');
         }
         this.setupNavigation();
     }
 
     getItsonIdFromURL() {
-        const params = new URLSearchParams(window. location.search);
-        return params.get('itsonId') || '252538';
+        // 1) URL param
+        const params = new URLSearchParams(window.location.search);
+        const fromQuery = params.get('itsonId');
+
+        if (fromQuery) return fromQuery;
+
+        // 2) localStorage (si vienes del Backoffice y guardaste el usuario)
+        try {
+            const rawUser = localStorage.getItem('user');
+            if (rawUser) {
+            const user = JSON.parse(rawUser);
+            if (user && (user.itsonId || user.itsonID)) {
+                return user.itsonId || user.itsonID;
+            }
+            }
+        } catch (_) {}
+
+        // 3) Valor por defecto (cambia por el tuyo si quieres)
+        return '252538';
     }
 
     async loadProjects() {
@@ -32,23 +49,21 @@ class Portfolio {
             
             const projects = await response.json();
             console.log('📦 Datos recibidos completos:', projects);
-            console.log('📦 Es array:', Array.isArray(projects));
-            console.log('📦 Largo:', projects.length);
 
-            if (! response.ok) {
+            if (!response.ok) {
                 throw new Error(`HTTP ${response.status}: ${JSON.stringify(projects)}`);
             }
 
             if (Array.isArray(projects) && projects.length > 0) {
                 console.log(`✅ Se encontraron ${projects.length} proyecto(s)`);
-                this. renderProjects(projects);
+                this.renderProjects(projects);
             } else {
-                console.warn('⚠️ Sin proyectos.  Respuesta:', projects);
-                this.showError('No hay proyectos disponibles.  Verifica el Backoffice.');
+                console.warn('⚠️ Sin proyectos. Respuesta:', projects);
+                this.showError('No hay proyectos disponibles. Verifica el Backoffice.');
             }
         } catch (error) {
             console.error('❌ Error completo:', error);
-            this. showError(`Error: ${error.message}`);
+            this.showError(`Error: ${error.message}`);
         }
     }
 
@@ -63,15 +78,15 @@ class Portfolio {
     }
 
     createProjectCard(project) {
-        const card = document. createElement('div');
-        card. className = 'project-item';
+        const card = document.createElement('div');
+        card.className = 'project-item';
 
         const imageUrl = project.images && project.images.length > 0 
             ? project.images[0]
-            : 'https://via.placeholder.com/400x200? text=Project';
+            : 'https://via.placeholder.com/400x200?text=Project';
 
         const title = this.escapeHtml(project.title || 'Sin título');
-        const description = this.escapeHtml(project. description || '');
+        const description = this.escapeHtml(project.description || '');
         const technologies = Array.isArray(project.technologies) ? project.technologies : [];
 
         const techHtml = technologies.length > 0 
@@ -81,7 +96,7 @@ class Portfolio {
             : '';
 
         const repoLink = project.repository 
-            ? `<a href="${this.escapeHtml(project. repository)}" target="_blank" rel="noopener noreferrer" class="project-link">Ver proyecto</a>`
+            ? `<a href="${this.escapeHtml(project.repository)}" target="_blank" rel="noopener noreferrer" class="project-link">Ver proyecto</a>`
             : '';
 
         card.innerHTML = `
@@ -113,7 +128,7 @@ class Portfolio {
             let currentSection = '';
             sections.forEach(section => {
                 const sectionTop = section.offsetTop;
-                if (window. pageYOffset >= sectionTop - 200) {
+                if (window.pageYOffset >= sectionTop - 200) {
                     currentSection = section.getAttribute('id');
                 }
             });
@@ -121,7 +136,7 @@ class Portfolio {
             navLinks.forEach(link => {
                 link.classList.remove('active');
                 if (link.getAttribute('href') === `#${currentSection}`) {
-                    link. classList.add('active');
+                    link.classList.add('active');
                 }
             });
         });
