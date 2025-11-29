@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mi Portafolio</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Cursor personalizado -->
+    <div class="cursor"></div>
+    <div class="cursor-follower"></div>
+
+    <div class="layout-wrapper">
+        <!-- SIDEBAR IZQUIERDO (Sticky) -->
+        <aside class="sidebar-left">
+            <div class="sidebar-content">
+                <div class="sidebar-header">
+                    <h1 class="name">Dulce Hernandez</h1>
+                    <p class="role">Ingeniera en Software</p>
+                </div>
+
+                <p class="sidebar-intro">
+                    Full-Stack Developer en desarrollo | Diseño + Código de calidad | Creo soluciones tecnológicas que transforman ideas en experiencias digitales de alto impacto.
+                </p>
+
+                <!-- Navigation -->
+                <nav class="navbar">
+                    <ul class="nav-menu">
+                        <li class="nav-item"><a href="#about" class="nav-link">Sobre Mi</a></li>
+                        <li class="nav-item"><a href="#skills" class="nav-link">Habilidades</a></li>
+                        <li class="nav-item"><a href="#projects" class="nav-link">Proyectos</a></li>
+                        <li class="nav-item"><a href="#contact" class="nav-link">Contacto</a></li>
+                    </ul>
+                </nav>
+
+                <!-- Social Links -->
+                <div class="social-links">
+                    <a href="#" class="social-link" aria-label="GitHub" title="GitHub">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M9 19c-5 1. 5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link" aria-label="LinkedIn" title="LinkedIn">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6zM2 9h4v12H2z"></path>
+                            <circle cx="4" cy="4" r="2"></circle>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Twitter" title="Twitter">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M23 3a10.9 10.9 0 0 1-3.14 1.53 4.48 4.48 0 0 0-7.86 3v1A10.66 10.66 0 0 1 3 4s-4 9 5 13a11. 64 11.64 0 0 1-7 2s9 5 20 0a9.5 9.5 0 0 0-8. 16-4.3z"></path>
+                        </svg>
+                    </a>
+                    <a href="#" class="social-link" aria-label="Email" title="Email">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <rect x="2" y="4" width="20" height="16" rx="2"></rect>
+                            <path d="M22 7l-8. 97 5.7a1. 94 1.94 0 0 1-2.06 0L2 7"></path>
+                        </svg>
+                    </a>
+                </div>
+            </div>
+        </aside>
+
+        <!-- CONTENIDO PRINCIPAL (Scrolleable) -->
+        <main class="content-main">
+            <!-- About Section -->
+            <section class="about" id="sobre-mi">
+                <h2 class="section-title">Sobre mí</h2>
+                <div class="section-content">
+                    <p>
+                        Soy Dulce Maria Hernandez Ibarra, ingeniera en software con gusto por el backend y la lógica de los sistemas. 
+                        Mi especialidad está en el diseño de interfaces y la experiencia de usuario, 
+                        donde disfruto crear soluciones intuitivas y atractivas. Creo que la mejor tecnología 
+                        surge cuando la estructura técnica se une con un diseño centrado en las personas. 
+                    </p>
+                    <p>
+                        A lo largo de mi trayectoria he trabajado en proyectos de distintos tamaños, colaborando con 
+                        clientes reales y logrando resultados satisfactorios. Algunos fueron asignados en contextos académicos y profesionales, 
+                        mientras que otros nacieron de mis propias ideas, donde reuní y coordiné equipos para hacerlos realidad. Esta diversidad
+                        de experiencias me ha permitido fortalecer mis habilidades técnicas y de liderazgo, y al mismo tiempo disfrutar del proceso 
+                        creativo de transformar ideas en soluciones digitales que generan valor y satisfacción.
+                    </p>
+                </div>
+            </section>
+
+        <!-- Skills Section -->
+        <section class="skills" id="habilidades">
+            <h2 class="section-title">Habilidades</h2>
+            <div class="skills-grid">
+                <div class="skill-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/java/java-original.svg" alt="Java" class="skill-icon">
+                    <p class="skill-name">Java</p>
+                </div>
+                <div class="skill-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/csharp/csharp-original.svg" alt="C#" class="skill-icon">
+                    <p class="skill-name">C#</p>
+                </div>
+                <div class="skill-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/dot-net/dot-net-original.svg" alt=".NET" class="skill-icon">
+                    <p class="skill-name">.NET</p>
+                </div>
+                <div class="skill-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/microsoftsqlserver/microsoftsqlserver-plain.svg" alt="SQL Server" class="skill-icon">
+                    <p class="skill-name">SQL Server</p>
+                </div>
+                <div class="skill-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/javascript/javascript-original.svg" alt="JavaScript" class="skill-icon">
+                    <p class="skill-name">JavaScript</p>
+                </div>
+                <div class="skill-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/nodejs/nodejs-original.svg" alt="Node.js" class="skill-icon">
+                    <p class="skill-name">Node.js</p>
+                </div>
+                <div class="skill-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/html5/html5-original.svg" alt="HTML" class="skill-icon">
+                    <p class="skill-name">HTML</p>
+                </div>
+                <div class="skill-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/css3/css3-original.svg" alt="CSS" class="skill-icon">
+                    <p class="skill-name">CSS</p>
+                </div>
+                <div class="skill-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/postgresql/postgresql-original.svg" alt="PostgreSQL" class="skill-icon">
+                    <p class="skill-name">PostgreSQL</p>
+                </div>
+                <div class="skill-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/git/git-original.svg" alt="Git" class="skill-icon">
+                    <p class="skill-name">Git</p>
+                </div>
+                <div class="skill-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/python/python-original.svg" alt="Python" class="skill-icon">
+                    <p class="skill-name">Python</p>
+                </div>
+                <div class="skill-card">
+                    <img src="https://cdn.jsdelivr.net/gh/devicons/devicon@latest/icons/docker/docker-original.svg" alt="Docker" class="skill-icon">
+                    <p class="skill-name">Docker</p>
+                </div>
+            </div>
+        </section>
+
+            <!-- Projects Section -->
+            <section class="projects" id="proyectos">
+                <h2 class="section-title">Proyectos</h2>
+                <div id="projects-list" class="projects-list">
+                    <div class="project-loading">Cargando proyectos...</div>
+                </div>
+            </section>
+
+            <!-- Contact Section -->
+            <section class="contact" id="contact">
+                <h2 class="section-title">Contacto</h2>
+                <p class="contact-text">
+                    ¿Quieres colaborar conmigo? Escríbeme o revisa mis proyectos en GitHub. 
+                </p>
+                <a href="mailto:contact@example.com" class="cta-button">Envíame un correo</a>
+            </section>
+
+            <!-- Footer -->
+            <footer class="footer">
+                <p>Diseñado y construido por <strong>Dulce Hernandez</strong></p>
+            </footer>
+        </main>
+    </div>
+
+    <script src="cursor.js"></script>
+    <script src="portfolio.js"></script>
+</body>
+</html>
