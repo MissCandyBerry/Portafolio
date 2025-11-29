@@ -1,3 +1,10 @@
+/* Añadido para optimizar rendimiento de animaciones */
+.project-item,
+.skill-card,
+.section-title {
+    will-change: transform, opacity;
+}
+
 * {
     margin: 0;
     padding: 0;
@@ -63,54 +70,10 @@ body::before {
   transition: opacity 0.35s ease;
 }
 
-.cursor {
-  position: fixed;
-  width: 12px;
-  height: 12px;
-  background: #c596cb;
-  border-radius: 50%;
-  pointer-events: none;
-  transform: translate(-50%,-50%);
-  z-index: 9999;
-  box-shadow:
-    0 0 6px rgba(246, 208, 220, 0.7),
-    0 0 14px rgba(246, 208, 220,0.35);
-    display: none  ;
-}
-
-.cursor-follower { display: none; }
-
 /* contenedores principales sean transparentes */
 .sidebar-left,
 .content-main {
   background: transparent;
-}
-
-/* ============= CURSOR PERSONALIZADO ============= */
-
-.cursor {
-    position: fixed;
-    width: 12px;
-    height: 12px;
-    background: var(--primary-color);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9999;
-    transform: translate(-50%, -50%);
-    box-shadow: 0 0 20px rgba(199, 91, 122, 0.5);
-    opacity: 0; /* empieza oculto hasta mouseenter */
-}
-
-.cursor-follower {
-    position: fixed;
-    width: 40px;
-    height: 40px;
-    border: 2px solid var(--primary-color);
-    border-radius: 50%;
-    pointer-events: none;
-    z-index: 9998;
-    transform: translate(-50%, -50%);
-    opacity: 0.5;
 }
 
 /* ============= LAYOUT PRINCIPAL ============= */
@@ -154,7 +117,7 @@ body::before {
 }
 
 .name {
-    font-size: 4.2rem;
+    font-size: 4.4rem;
     font-weight: 800;
     line-height: 1.1;
     background: linear-gradient(135deg, var(--primary-color), var(--accent-color));
@@ -165,17 +128,17 @@ body::before {
 }
 
 .role {
-    font-size: 1.2rem;
+    font-size: 1.4rem;
     color: var(--text-secondary);
     font-weight: 400;
     text-align: left;
 }
 
 .sidebar-intro {
-    font-size: 1rem;
+    font-size: 1.1rem;
     color: var(--text-secondary);
     line-height: 1.6;
-    max-width: 400px;
+    max-width: 480px;
     text-align: left;
 }
 
@@ -201,7 +164,7 @@ body::before {
 .nav-link {
     color: var(--text-secondary);
     text-decoration: none;
-    font-size: 0.9rem;
+    font-size: 1rem;
     font-weight: 500;
     transition: var(--transition);
     display: flex;
@@ -236,8 +199,6 @@ body::before {
     gap: 16px;
     align-items: center;
     justify-content: flex-start;
-    margin-top: auto;
-    padding-top: 40px;
 }
 
 .social-link {
@@ -285,7 +246,7 @@ section:last-of-type {
 /* ============= SECCIONES ============= */
 
 .section-title {
-    font-size: 1.8rem;
+    font-size: 2rem;
     font-weight: 700;
     margin-bottom: 32px;
     position: relative;
@@ -309,7 +270,7 @@ section:last-of-type {
     gap: 16px;
     color: var(--text-secondary);
     line-height: 1.8;
-    font-size: 1rem;
+    font-size: 1.2rem;
 }
 
 .section-content p {
