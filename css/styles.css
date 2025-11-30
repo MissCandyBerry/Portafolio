@@ -1,4 +1,4 @@
-/* Añadido para optimizar rendimiento de animaciones */
+/* optimizar rendimiento de animaciones */
 .project-item,
 .skill-card,
 .section-title {
@@ -12,7 +12,11 @@
 }
 
 :root {
-    /* Variables base (se sobreescriben por tema dinámico) */
+    /* Variable que define dónde está la división.*/
+
+    --sidebar-width: 48%; 
+
+    /* Variables base*/
     --primary-color: #edb9f0;
     --secondary-color: #130835;
     --accent-color: #f7ddf7;
@@ -22,51 +26,51 @@
     --text-secondary: #d4cbd4;
     --border-color: #111010;
 
-    /* Usa Manrope como fuente sans por defecto */
     --font-sans: 'Manrope', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     --font-mono: 'Courier New', monospace;
 
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-    /* Spotlight dinámico */
+    /* Spotlight */
     --spot-x: 50vw;
     --spot-y: 50vh;
     --spot-size: 320px;
     --spotlight-color: rgba(246, 208, 220, 0.14);
 
     /* Fondo global actual (sobre-escrito por themes) */
-    --bg-color: #000000;
+    --bg-color: #f7c9d9;
 }
 
 /* ================= TEMAS POR SECCIÓN ================= */
-/* Sobre mí: fondo rosa, texto negro, spotlight negro */
+
+/* Sobre mí */
 body.theme-sobre-mi {
-    --bg-color: #f7c9d9;                /* Rosa claro */
+    --bg-color: #f7c9d9;               
     --text-primary: #111111;
     --text-secondary: #222222;
     --primary-color: #111111;
     --accent-color: #22031d;
-    --spotlight-color: rgba(0, 0, 0, 0.308);
+    --spotlight-color: rgba(0, 0, 0, 0.42);
 }
 
-/* Habilidades: fondo blanco, texto negro, spotlight rosa */
+/* Habilidades */
 body.theme-habilidades {
     --bg-color: #fef3fd;
     --text-primary: #111111;
     --text-secondary: #222222;
     --primary-color: #111111;
     --accent-color: #16030d;
-    --spotlight-color: rgba(243, 160, 239, 0.369);
+    --spotlight-color: rgba(243, 160, 239, 0.495);
 }
 
-/* Proyectos: fondo negro, texto rosa, spotlight rosita */
+/* Proyectos */
 body.theme-proyectos {
     --bg-color: #000000;
     --text-primary: #f7c9d9;
     --text-secondary: #f7c9ef;
     --primary-color: #f7c9d9;
     --accent-color: #fac6f0;
-    --spotlight-color: rgba(240, 181, 242, 0.298);
+    --spotlight-color: rgba(240, 181, 242, 0.453);
 }
 
 html {
@@ -84,7 +88,7 @@ body {
   position: relative;
 }
 
-/* Spotlight simplificado usando solo una variable */
+/* Spotlight simplificado */
 body::before {
   content: "";
   position: fixed;
@@ -112,9 +116,10 @@ body::before {
     min-height: 100vh;
 }
 
-/* SIDEBAR IZQUIERDO */
+/* SIDEBAR IZQUIERDO
+*/
 .sidebar-left {
-    width: 30%;
+    width: var(--sidebar-width);
     height: 100vh;
     position: fixed;
     left: 0;
@@ -123,11 +128,12 @@ body::before {
     flex-direction: column;
     justify-content: flex-start;
     align-items: flex-start;
-    padding: 100px 120px;
+    padding: 50px 120px;
+    padding-left: 230px;
     background: transparent;
     z-index: 100;
     overflow: visible;
-    margin-left: 10%;
+    margin-left: 0; 
 }
 
 .sidebar-content {
@@ -261,8 +267,8 @@ body::before {
 
 /* ============= MITAD DERECHA ============= */
 .content-main {
-    width: 70%;
-    margin-left: 40%;
+    width: calc(100% - var(--sidebar-width));
+    margin-left: var(--sidebar-width);
     background: transparent;
     padding: 80px 120px;
     transition: color 0.4s ease;
@@ -515,6 +521,7 @@ section:last-of-type {
 }
 
 /* ============= RESPONSIVE ============= */
+
 @media (max-width: 1200px) {
     .sidebar-left {
         padding: 60px 40px;
