@@ -1,17 +1,20 @@
-// Requiere que gsap esté cargado antes (ya lo tienes en el HTML)
+// Spotlight controlado por variables de tema (ya no fija color aquí)
 class Spotlight {
     constructor() {
         this.spotSize = 320;
-        this.spotColor = 'rgba(246,208,220,0.12)';
         this.init();
     }
 
     init() {
         const root = document.documentElement;
         root.style.setProperty('--spot-size', `${this.spotSize}px`);
-        root.style.setProperty('--spot-color', this.spotColor);
 
         document.addEventListener('mousemove', (e) => {
+            if (!window.gsap) {
+                root.style.setProperty('--spot-x', `${e.clientX}px`);
+                root.style.setProperty('--spot-y', `${e.clientY}px`);
+                return;
+            }
             gsap.to(root, {
                 '--spot-x': `${e.clientX}px`,
                 '--spot-y': `${e.clientY}px`,

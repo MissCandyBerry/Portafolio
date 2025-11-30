@@ -5,6 +5,7 @@ class Portfolio {
     constructor() {
         this.projectsList = document.getElementById('projects-list');
         this.itsonId = this.getItsonIdFromURL();
+        this.currentTheme = null;
         this.init();
     }
 
@@ -16,13 +17,10 @@ class Portfolio {
         }
 
         this.setupNavigation();
-
-        // Intro: animaciones SIN ScrollTrigger (no se deben invertir)
         this.animateIntro();
-
-        // Scroll: solo para secciones del contenido, con once:true
         this.setupScrollAnimations();
         this.animateSkills();
+        this.setupThemeBySection();
     }
 
     getItsonIdFromURL() {
@@ -72,7 +70,6 @@ class Portfolio {
             created.push(card);
         });
 
-        // Animación de entrada de tarjetas: una sola vez y limpia estilos
         if (window.gsap) {
             gsap.from(created, {
                 autoAlpha: 0,
@@ -164,7 +161,7 @@ class Portfolio {
         });
     }
 
-    // Intro: sin ScrollTrigger (navbar y social nunca deben desaparecer)
+    /* Intro */
     animateIntro() {
         if (!window.gsap) return;
 
@@ -192,7 +189,6 @@ class Portfolio {
         });
     }
 
-    // ScrollTrigger para secciones del contenido: una sola vez
     setupScrollAnimations() {
         if (!window.ScrollTrigger || !window.gsap) return;
         gsap.registerPlugin(ScrollTrigger);
@@ -232,7 +228,6 @@ class Portfolio {
         });
     }
 
-    // Skills: animación por scroll una vez y limpias estilos
     animateSkills() {
         if (!window.gsap || !window.ScrollTrigger) return;
         const skillCards = document.querySelectorAll('.skill-card');
@@ -254,6 +249,60 @@ class Portfolio {
                 once: true
             }
         });
+    }
+
+    /* ================== TEMAS DINÁMICOS POR SECCIÓN ================== */
+    setupThemeBySection() {
+        if (!window.ScrollTrigger || !window.gsap) return;
+        gsap.registerPlugin(ScrollTrigger);
+
+        const themeConfig = {
+            'sobre-mi': 'theme-sobre-mi',
+            'habilidades': 'theme-habilidades',
+            'proyectos': 'theme-proyectos'
+        };
+
+        Object.entries(themeConfig).forEach(([sectionId, themeClass]) => {
+            ScrollTrigger.create({
+                trigger: `#${sectionId}`,
+                start: 'top center',
+                onEnter: () => this.applyTheme(themeClass),
+                onEnterBack: () => this.applyTheme(themeClass)
+            });
+        });
+
+        // Aplicar primer tema según posición inicial
+        const firstVisible = Object.keys(themeConfig).find(id => {
+            const el = document.getElementById(id);
+            if (!el) return false;
+            const rect = el.getBoundingClientRect();
+            return rect.top <= window.innerHeight * 0.5 && rect.bottom >= 0;
+        });
+        if (firstVisible) {
+            this.applyTheme(themeConfig[firstVisible], false);
+        }
+    }
+
+    applyTheme(themeClass, animate = true) {
+        if (this.currentTheme === themeClass) return;
+        const body = document.body;
+
+        // Remover cualquier tema anterior
+        body.classList.remove('theme-sobre-mi', 'theme-habilidades', 'theme-proyectos');
+        body.classList.add(themeClass);
+
+        // Animar cambios en variables principales (suavizado extra)
+        if (animate && window.gsap) {
+            gsap.to(body, {
+                duration: 0.6,
+                ease: 'power2.out',
+                // Podemos animar nada directamente: la transición se da por CSS
+                // pero disparamos un "tick" para forzar repintado si fuese necesario.
+                onUpdate: () => {}
+            });
+        }
+
+        this.currentTheme = themeClass;
     }
 
     escapeHtml(text) {

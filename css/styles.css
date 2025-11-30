@@ -12,25 +12,61 @@
 }
 
 :root {
-    --primary-color: #edb9f0;      
-    --secondary-color: #130835;    
-    --accent-color: #f7ddf7;       
-    --dark-bg: #111010;;            
-    --light-bg: #111010;        
-    --text-primary: #f5c5f5;       
-    --text-secondary: #d4cbd4;     
-    --border-color: #111010;       
-    
-    --font-sans: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    /* Variables base (se sobreescriben por tema dinámico) */
+    --primary-color: #edb9f0;
+    --secondary-color: #130835;
+    --accent-color: #f7ddf7;
+    --dark-bg: #111010;
+    --light-bg: #111010;
+    --text-primary: #f5c5f5;
+    --text-secondary: #d4cbd4;
+    --border-color: #111010;
+
+    /* Usa Manrope como fuente sans por defecto */
+    --font-sans: 'Manrope', 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     --font-mono: 'Courier New', monospace;
-    
+
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
 
-    /* Spotlight variables */
+    /* Spotlight dinámico */
     --spot-x: 50vw;
     --spot-y: 50vh;
     --spot-size: 320px;
-    --spot-color: rgba(246, 208, 220, 0.12);
+    --spotlight-color: rgba(246, 208, 220, 0.14);
+
+    /* Fondo global actual (sobre-escrito por themes) */
+    --bg-color: #000000;
+}
+
+/* ================= TEMAS POR SECCIÓN ================= */
+/* Sobre mí: fondo rosa, texto negro, spotlight negro */
+body.theme-sobre-mi {
+    --bg-color: #f7c9d9;                /* Rosa claro */
+    --text-primary: #111111;
+    --text-secondary: #222222;
+    --primary-color: #111111;
+    --accent-color: #22031d;
+    --spotlight-color: rgba(0, 0, 0, 0.308);
+}
+
+/* Habilidades: fondo blanco, texto negro, spotlight rosa */
+body.theme-habilidades {
+    --bg-color: #fef3fd;
+    --text-primary: #111111;
+    --text-secondary: #222222;
+    --primary-color: #111111;
+    --accent-color: #16030d;
+    --spotlight-color: rgba(243, 160, 239, 0.369);
+}
+
+/* Proyectos: fondo negro, texto rosa, spotlight rosita */
+body.theme-proyectos {
+    --bg-color: #000000;
+    --text-primary: #f7c9d9;
+    --text-secondary: #f7c9ef;
+    --primary-color: #f7c9d9;
+    --accent-color: #fac6f0;
+    --spotlight-color: rgba(240, 181, 242, 0.298);
 }
 
 html {
@@ -43,10 +79,12 @@ body {
   overflow-x: hidden;
   margin: 0;
   padding: 0;
-  background: linear-gradient(180deg,#000000 0%, #1b1b1b 100%);
+  background: var(--bg-color);
+  transition: background-color 0.6s ease;
   position: relative;
 }
 
+/* Spotlight simplificado usando solo una variable */
 body::before {
   content: "";
   position: fixed;
@@ -55,29 +93,19 @@ body::before {
   z-index: 0;
   background:
     radial-gradient(circle at var(--spot-x) var(--spot-y),
-      rgba(246, 208, 220,0.14) 0%,
-      rgba(246, 208, 220,0.10) 10%,
-      rgba(246, 208, 220,0.06) 22%,
-      rgba(246, 208, 220,0.03) 34%,
-      transparent 50%
-    ),
-    radial-gradient(circle at var(--spot-x) var(--spot-y),
-      rgba(246, 208, 220,0.06) 0%,
-      rgba(246, 208, 220,0.04) 24%,
-      transparent 52%
+      var(--spotlight-color) 0%,
+      transparent 55%
     );
-  filter: blur(5px);
-  transition: opacity 0.35s ease;
+  filter: blur(60px);
+  transition: opacity 0.35s ease, background 0.6s ease;
 }
 
-/* contenedores principales sean transparentes */
 .sidebar-left,
 .content-main {
   background: transparent;
 }
 
 /* ============= LAYOUT PRINCIPAL ============= */
-
 .layout-wrapper {
     display: flex;
     width: 100%;
@@ -96,7 +124,7 @@ body::before {
     justify-content: flex-start;
     align-items: flex-start;
     padding: 100px 120px;
-    background: transparent; 
+    background: transparent;
     z-index: 100;
     overflow: visible;
     margin-left: 10%;
@@ -125,25 +153,28 @@ body::before {
     -webkit-text-fill-color: transparent;
     background-clip: text;
     text-align: left;
+    transition: color 0.4s ease, background 0.4s ease;
 }
 
 .role {
     font-size: 1.4rem;
     color: var(--text-secondary);
-    font-weight: 400;
+    font-weight: 600;
     text-align: left;
+    transition: color 0.4s ease;
 }
 
 .sidebar-intro {
     font-size: 1.1rem;
+    font-weight: 500;
     color: var(--text-secondary);
     line-height: 1.6;
-    max-width: 480px;
+    max-width: 580px;
     text-align: left;
+    transition: color 0.4s ease;
 }
 
 /* ============= NAVBAR ============= */
-
 .navbar {
     width: 100%;
     margin-top: auto;
@@ -159,6 +190,7 @@ body::before {
 
 .nav-item {
     position: relative;
+    
 }
 
 .nav-link {
@@ -184,15 +216,17 @@ body::before {
 }
 
 .nav-link:hover {
-    color: var(--primary-color);
+    color: var(--accent-color);
 }
 
 .nav-link.active {
-    color: var(--primary-color);
+    color: var(--accent-color);
+    font-size: 1.2rem;
+    font-weight: 600;
 }
 
-/* ============= SOCIAL LINKS ============= */
 
+/* ============= SOCIAL LINKS ============= */
 .social-links {
     display: flex;
     flex-direction: row;
@@ -226,17 +260,18 @@ body::before {
 }
 
 /* ============= MITAD DERECHA ============= */
-
 .content-main {
     width: 70%;
     margin-left: 40%;
-    background: transparent; 
+    background: transparent;
     padding: 80px 120px;
+    transition: color 0.4s ease;
 }
 
 section {
     margin-bottom: 80px;
     scroll-margin-top: 0;
+    transition: color 0.4s ease, background 0.4s ease;
 }
 
 section:last-of-type {
@@ -244,7 +279,6 @@ section:last-of-type {
 }
 
 /* ============= SECCIONES ============= */
-
 .section-title {
     font-size: 2rem;
     font-weight: 700;
@@ -254,6 +288,7 @@ section:last-of-type {
     align-items: center;
     gap: 16px;
     color: var(--text-primary);
+    transition: color 0.4s ease;
 }
 
 .section-title::after {
@@ -271,10 +306,12 @@ section:last-of-type {
     color: var(--text-secondary);
     line-height: 1.8;
     font-size: 1.2rem;
+    transition: color 0.4s ease;
 }
 
 .section-content p {
     margin-bottom: 12px;
+    font-weight: 500;
 }
 
 .section-content a {
@@ -290,10 +327,9 @@ section:last-of-type {
 }
 
 /* ============= SKILLS ============= */
-
 .skills {
     padding: 6rem 2rem;
-    background: linear-gradient(to bottom, transparent, rgba(211, 166, 209, 0));
+    background: transparent;
 }
 
 .skills-grid {
@@ -349,9 +385,7 @@ section:last-of-type {
     color: var(--primary-color);
 }
 
-
 /* ============= PROJECTS ============= */
-
 .projects-list {
     display: grid;
     grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
@@ -393,6 +427,7 @@ section:last-of-type {
     font-weight: 700;
     color: var(--text-primary);
     margin-bottom: 12px;
+    transition: color 0.4s ease;
 }
 
 .project-description {
@@ -400,6 +435,7 @@ section:last-of-type {
     line-height: 1.6;
     margin-bottom: 16px;
     font-size: 0.95rem;
+    transition: color 0.4s ease;
 }
 
 .project-tech {
@@ -441,7 +477,6 @@ section:last-of-type {
 }
 
 /* ============= FOOTER ============= */
-
 .footer {
     text-align: center;
     padding-top: 80px;
@@ -449,6 +484,7 @@ section:last-of-type {
     color: var(--text-secondary);
     font-size: 0.9rem;
     border-top: 1px solid rgba(199, 91, 122, 0.1);
+    transition: color 0.4s ease;
 }
 
 .footer strong {
@@ -473,31 +509,25 @@ section:last-of-type {
     background: rgba(199, 91, 122, 0.5);
 }
 
-
 * {
     scrollbar-color: rgba(199, 91, 122, 0.3) var(--dark-bg);
     scrollbar-width: thin;
 }
 
 /* ============= RESPONSIVE ============= */
-
 @media (max-width: 1200px) {
     .sidebar-left {
         padding: 60px 40px;
     }
-
     .content-main {
         padding: 60px 40px;
     }
-
     .name {
         font-size: 2rem;
     }
-
     .sidebar-intro {
         font-size: 0.95rem;
     }
-
     .section-title::after {
         max-width: 200px;
     }
@@ -507,23 +537,18 @@ section:last-of-type {
     .sidebar-left {
         padding: 50px 30px;
     }
-
     .content-main {
         padding: 50px 30px;
     }
-
     .name {
         font-size: 1.8rem;
     }
-
     .nav-menu {
         gap: 16px;
     }
-
     .nav-link {
         font-size: 0.85rem;
     }
-
     .projects-list {
         grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
     }
@@ -533,7 +558,6 @@ section:last-of-type {
     .layout-wrapper {
         flex-direction: column;
     }
-
     .sidebar-left {
         position: static;
         width: 100%;
@@ -544,57 +568,45 @@ section:last-of-type {
         border-bottom: 1px solid rgba(199, 91, 122, 0.1);
         background: transparent;
     }
-
     .sidebar-content {
         gap: 30px;
     }
-
     .sidebar-intro {
         display: none;
     }
-
     .nav-menu {
         flex-direction: row;
         gap: 30px;
         margin-top: 20px;
     }
-
     .nav-link {
         font-size: 0.8rem;
     }
-
     .nav-link::before {
         display: none;
     }
-
     .social-links {
         justify-content: flex-start;
         margin-top: 20px;
     }
-
     .content-main {
         width: 100%;
         margin-left: 0;
         padding: 60px 30px;
         background: transparent;
     }
-
     .name {
         font-size: 1.8rem;
     }
-
     .projects-list {
         grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
     }
-
     section {
         margin-bottom: 60px;
     }
-
     .section-title {
         font-size: 1.5rem;
     }
-
     .section-title::after {
         max-width: 100px;
     }
@@ -604,45 +616,35 @@ section:last-of-type {
     .sidebar-left {
         padding: 40px 20px;
     }
-
     .sidebar-header {
         gap: 4px;
     }
-
     .name {
         font-size: 1.4rem;
     }
-
     .role {
         font-size: 1rem;
     }
-
     .nav-menu {
         gap: 15px;
     }
-
     .content-main {
         padding: 40px 20px;
     }
-
     .section-title {
         font-size: 1.3rem;
         gap: 8px;
     }
-
     .section-title::after {
         max-width: 60px;
     }
-
     .projects-list {
         grid-template-columns: 1fr;
         gap: 16px;
     }
-
     .project-content {
         padding: 16px;
     }
-
     .sidebar-intro {
         display: block;
         font-size: 0.85rem;
@@ -650,18 +652,15 @@ section:last-of-type {
 }
 
 /* ============= RESPONSIVE SKILLS ============= */
-
 @media (max-width: 1024px) {
     .skills-grid {
         grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
         gap: 20px;
     }
-
     .skill-icon {
         width: 56px;
         height: 56px;
     }
-
     .skill-name {
         font-size: 0.85rem;
     }
@@ -672,16 +671,13 @@ section:last-of-type {
         grid-template-columns: repeat(auto-fit, minmax(90px, 1fr));
         gap: 16px;
     }
-
     .skill-card {
         padding: 20px 12px;
     }
-
     .skill-icon {
         width: 48px;
         height: 48px;
     }
-
     .skill-name {
         font-size: 0.8rem;
     }
@@ -692,16 +688,13 @@ section:last-of-type {
         grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
         gap: 12px;
     }
-
     .skill-card {
         padding: 16px 8px;
     }
-
     .skill-icon {
         width: 40px;
         height: 40px;
     }
-
     .skill-name {
         font-size: 0.75rem;
     }
